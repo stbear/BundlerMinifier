@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using BundlerMinifier;
 using EnvDTE80;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 
 namespace BundlerMinifierVsix
 {
@@ -105,17 +103,17 @@ namespace BundlerMinifierVsix
             if (!IsOutputProduced(configFile))
                 return;
 
-            ThreadPool.QueueUserWorkItem((o) =>
+            //ThreadPool.QueueUserWorkItem((o) =>
+            //{
+            try
             {
-                try
-                {
-                    Processor.Process(configFile, bundles);
-                }
-                catch (Exception ex)
-                {
-                    HandleProcessingException(configFile, ex);
-                }
-            });
+                Processor.Process(configFile, bundles);
+            }
+            catch (Exception ex)
+            {
+                HandleProcessingException(configFile, ex);
+            }
+            //});
         }
 
         public static bool IsOutputProduced(string configFile)
